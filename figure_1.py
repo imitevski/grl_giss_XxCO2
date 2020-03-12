@@ -11,8 +11,8 @@ import glob
 import os
 import cartopy.crs as ccrs
 
+### load datasets ###
 os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/output")
-
 t_05 = xr.open_dataset('temp_0.5_surface.nc')
 t_1 = xr.open_dataset('temp_1_surface.nc')
 t_15 = xr.open_dataset('temp_1.5_surface.nc')
@@ -23,12 +23,10 @@ t_5 = xr.open_dataset('temp_5_surface.nc')
 t_6 = xr.open_dataset('temp_6_surface.nc')
 t_7 = xr.open_dataset('temp_7_surface.nc')
 t_8 = xr.open_dataset('temp_8_surface.nc')
-
 t_1_qf = xr.open_dataset('temp_1_1901_1960_surface_QFLUX.nc')
 t_2_qf = xr.open_dataset('temp_2_1901_1960_surface_QFLUX.nc')
 t_3_qf = xr.open_dataset('temp_3_1901_1960_surface_QFLUX.nc')
 t_4_qf = xr.open_dataset('temp_4_1901_1960_surface_QFLUX.nc')
-
 os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/plots_figures")
 
 def t_surf_timeseries_pd():
@@ -36,31 +34,52 @@ def t_surf_timeseries_pd():
 	Plots Figure 1 in the paper
 	'''
 
-	def y(lat_start, lat_end):
-		MEAN = ((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean()
+	def y(l_s, l_e):
+		"""
+		Surface temperature deviations from PI control for fully coupled ocean runs
+		
+		:Input:
+		 - *l_s* (int) - starting latitude
+		 - *l_e* (int) - ending latitude
+		:Output:
+		 - *y* (ndarray) - array with values for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
+		"""
+		MEAN = ((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean()
 		y = np.array([
-			((t_05.temp * t_05.axyp) / t_05.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN,	
-			((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN,
-			((t_15.temp * t_15.axyp) / t_15.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN,
-			((t_2.temp * t_2.axyp) / t_2.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN,
-			((t_3.temp * t_3.axyp) / t_3.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN,
-			((t_4.temp * t_4.axyp) / t_4.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN,
-			((t_5.temp * t_5.axyp) / t_5.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN,
-			((t_6.temp * t_6.axyp) / t_6.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN,
-			((t_7.temp * t_7.axyp) / t_7.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN,
-			((t_8.temp * t_8.axyp) / t_8.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean('month').mean('year').mean() - MEAN ])
+			((t_05.temp * t_05.axyp) / t_05.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,	
+			((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
+			((t_15.temp * t_15.axyp) / t_15.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
+			((t_2.temp * t_2.axyp) / t_2.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
+			((t_3.temp * t_3.axyp) / t_3.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
+			((t_4.temp * t_4.axyp) / t_4.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
+			((t_5.temp * t_5.axyp) / t_5.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
+			((t_6.temp * t_6.axyp) / t_6.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
+			((t_7.temp * t_7.axyp) / t_7.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
+			((t_8.temp * t_8.axyp) / t_8.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN ])
 		return y
 			
-	def y_QFLUX(year_s, year_e, lat_s, lat_e):
-		MEAN = ((t_1_qf.temp * t_1_qf.axyp) / t_1_qf.axyp.mean()).sel(year = slice(year_s, year_e), lat = slice(lat_s, lat_e)).mean(dim=['month','year']).mean()
+	def y_QFLUX(y_s, y_e, l_s, l_e):
+		"""
+		Surface temperature deviations from PI control for QFLUX runs 
+		
+		:Input:
+		 - *y_s* (int) - starting year 
+		 - *y_e* (int) - ending year
+		 - *l_s* (int) - starting latitude
+		 - *l_e* (int) - ending latitude
+		:Output:
+		 - *y* (ndarray) - array with values for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
+		"""
+		MEAN = ((t_1_qf.temp * t_1_qf.axyp) / t_1_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean()
 		y = np.array([
-			((t_1_qf.temp * t_1_qf.axyp) / t_1_qf.axyp.mean()).sel(year = slice(year_s, year_e), lat = slice(lat_s, lat_e)).mean(dim=['month','year']).mean() - MEAN,
-			((t_2_qf.temp * t_2_qf.axyp) / t_2_qf.axyp.mean()).sel(year = slice(year_s, year_e), lat = slice(lat_s, lat_e)).mean(dim=['month','year']).mean() - MEAN,
-			((t_3_qf.temp * t_3_qf.axyp) / t_3_qf.axyp.mean()).sel(year = slice(year_s, year_e), lat = slice(lat_s, lat_e)).mean(dim=['month','year']).mean() - MEAN,
-			((t_4_qf.temp * t_4_qf.axyp) / t_4_qf.axyp.mean()).sel(year = slice(year_s, year_e), lat = slice(lat_s, lat_e)).mean(dim=['month','year']).mean() - MEAN ])
+			((t_1_qf.temp * t_1_qf.axyp) / t_1_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
+			((t_2_qf.temp * t_2_qf.axyp) / t_2_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
+			((t_3_qf.temp * t_3_qf.axyp) / t_3_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
+			((t_4_qf.temp * t_4_qf.axyp) / t_4_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN ])
 		return y
 	
-	''' masking NAWH '''
+	### masking NAWH ###
+
 	td_150 = (t_15.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0
 	td_150[:45,:] = True
 	
@@ -85,19 +104,28 @@ def t_surf_timeseries_pd():
 	td_80 = (t_8.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0 
 	td_80[:45,:] = True
 	
-	def y_mask(lat_start, lat_end):
-		MEAN = ((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).mean()
+	def y_mask(l_s, l_e):
+		"""
+		Surface temperature deviations from PI control with NAWH mask applied
+		
+		:Input:
+		 - *l_s* (int) - starting latitude
+		 - *l_e* (int) - ending latitude
+		:Output:
+		 - *y* (ndarray) - array with values for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
+		"""	
+		MEAN = ((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean()
 		y = np.array([	
-			((t_05.temp * t_05.axyp) / t_05.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).mean() - MEAN,
-			((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).mean() - MEAN,
-			((t_15.temp * t_15.axyp) / t_15.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).where(td_150 == True).mean() - MEAN,
-			((t_2.temp * t_2.axyp) / t_2.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).where(td_20 == True).mean() - MEAN,
-			((t_3.temp * t_3.axyp) / t_3.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).where(td_30 == True).mean() - MEAN,
-			((t_4.temp * t_4.axyp) / t_4.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).where(td_40 == True).mean() - MEAN,
-			((t_5.temp * t_5.axyp) / t_5.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).where(td_50 == True).mean() - MEAN,
-			((t_6.temp * t_6.axyp) / t_6.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).where(td_60 == True).mean() - MEAN,
-			((t_7.temp * t_7.axyp) / t_7.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).where(td_70 == True).mean() - MEAN,
-			((t_8.temp * t_8.axyp) / t_8.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(lat_start, lat_end)).mean(dim=['month','year']).where(td_80 == True).mean() - MEAN ])
+			((t_05.temp * t_05.axyp) / t_05.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
+			((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
+			((t_15.temp * t_15.axyp) / t_15.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_150 == True).mean() - MEAN,
+			((t_2.temp * t_2.axyp) / t_2.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_20 == True).mean() - MEAN,
+			((t_3.temp * t_3.axyp) / t_3.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_30 == True).mean() - MEAN,
+			((t_4.temp * t_4.axyp) / t_4.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_40 == True).mean() - MEAN,
+			((t_5.temp * t_5.axyp) / t_5.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_50 == True).mean() - MEAN,
+			((t_6.temp * t_6.axyp) / t_6.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_60 == True).mean() - MEAN,
+			((t_7.temp * t_7.axyp) / t_7.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_70 == True).mean() - MEAN,
+			((t_8.temp * t_8.axyp) / t_8.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_80 == True).mean() - MEAN ])
 		return y
 	
 	

@@ -12,24 +12,22 @@ import os
 import cartopy.crs as ccrs
 import scipy 
 import scipy.stats
-
-
 	
 def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 		
 	'''
 	Plots AMOC in simulations from A) abrupt XxCO2 runs in GISS E2.1 and B) abrupt 4xCO2 CMIP6 models
  
-	Arguments:
-	- l_s: latitude start 
-	- l_e: latitude end
-	- d_s: depth start 
-	- d_e: depth end
-	- mov_avg: moving average in years 
+	:Input:
+	 - *l_s* (int) - latitude start 
+	 - *l_e* (int) - latitude end
+	 - *d_s* (int) -  depth start (in meters) 
+	 - *d_e* (int) -  depth end (in meters) 
+	 - *mov_avg*: moving average in years 
 	'''
 
-	os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/output")
-
+	### load datasets ###
+	os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/output")	
 	psi_05 = xr.open_dataset('psi_sf_Atl_0.5.nc').sf_Atl
 	psi_1 = xr.open_dataset('psi_sf_Atl_1.nc').sf_Atl
 	psi_15 = xr.open_dataset('psi_sf_Atl_1.5.nc').sf_Atl
@@ -39,6 +37,7 @@ def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 	psi_5 = xr.open_dataset('psi_sf_Atl_5.nc').sf_Atl
 	psi_6 = xr.open_dataset('psi_sf_Atl_6.nc').sf_Atl
 	psi_8 = xr.open_dataset('psi_sf_Atl_8.nc').sf_Atl
+	os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/plots_figures")
 
 	c6_CanESM5_1 = np.array(xr.open_dataset('/gpfsm/dnb02/projects/p54/users/imitevsk/cmip6/abrupt-4xCO2/CanESM5/msftmz_Omon_CanESM5_abrupt-4xCO2_r1i1p1f1_gn_185001-200012.nc')\
 			.msftmz.sel(lev=slice(d_s,d_e),lat=slice(l_s,l_e)).max(dim=['lev','lat']).groupby('time.year').mean('time').rolling(year = mov_avg, center=True).mean()[:150,0])
@@ -60,8 +59,6 @@ def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 			 .msftmz.sel(lev=slice(d_s,d_e),lat=slice(l_s,l_e)).max(dim=['lev','lat']).groupby('time.year').mean('time').rolling(year = mov_avg, center=True).mean()[:150,0])
 	c6_FGOALS_f3_L_3 = np.array(xr.open_dataset('/gpfsm/dnb02/projects/p54/users/imitevsk/cmip6/abrupt-4xCO2/FGOALS-f3-L/msftmz_Omon_FGOALS-f3-L_abrupt-4xCO2_r3i1p1f1_gn_185001-200912.nc')\
 			 .msftmz.sel(lev=slice(d_s,d_e),lat=slice(l_s,l_e)).max(dim=['lev','lat']).groupby('time.year').mean('time').rolling(year = mov_avg, center=True).mean()[:150,0])
-	#c6_GISS_E2_1_G_1 = np.array(xr.open_dataset('/gpfsm/dnb02/projects/p54/users/imitevsk/cmip6/abrupt-4xCO2/GISS-E2-1-G/merged_msftmz_Omon_GISS-E2-1-G_abrupt-4xCO2_r102i1p1f1_gn.nc')\
-	#		.msftmz.sel(lev=slice(d_s,d_e),lat=slice(l_s,l_e)).max(dim=['lev','lat']).groupby('time.year').mean('time').rolling(year = mov_avg, center=True).mean()[:150,0])
 	c6_GISS_E2_1_G_2 = np.array(xr.open_dataset('/gpfsm/dnb02/projects/p54/users/imitevsk/cmip6/abrupt-4xCO2/GISS-E2-1-G/merged_msftmz_Omon_GISS-E2-1-G_abrupt-4xCO2_r1i1p3f1_gn.nc')\
 			.msftmz.sel(lev=slice(d_s,d_e),lat=slice(l_s,l_e)).max(dim=['lev','lat']).groupby('time.year').mean('time').rolling(year = mov_avg, center=True).mean()[:150,0])	
 	c6_INM_CM4_8 = np.array(xr.open_dataset('/gpfsm/dnb02/projects/p54/users/imitevsk/cmip6/abrupt-4xCO2/INM-CM4-8/msftmz_Omon_INM-CM4-8_abrupt-4xCO2_r1i1p1f1_gr1_185001-199912.nc')\
@@ -87,11 +84,9 @@ def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 	c6_SAM0_UNICON = np.array(xr.open_dataset('/gpfsm/dnb02/projects/p54/users/imitevsk/cmip6/abrupt-4xCO2/SAM0-UNICON/merged_msftmz_Omon_SAM0-UNICON_abrupt-4xCO2_r1i1p1f1_gn.nc')\
 			.msftmz.sel(lev=slice(d_s,d_e),lat=slice(l_s,l_e)).max(dim=['lev','lat']).groupby('time.year').mean('time').rolling(year = mov_avg, center=True).mean()[:150,0])
 	
-	os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/plots_figures")
 
 	fig = plt.figure()
 	fig.set_figwidth(fig.get_figwidth() * 2)
-	#fig.set_figheight(fig.get_figheight() * 3)
 	
 	axes = fig.add_subplot(1,2,1)
 	psi_05.sel(lato2=slice(l_s,l_e), zoce=slice(d_s,d_e)).max(dim=['zoce','lato2']).groupby('time.year').mean('time').rolling(year = mov_avg, center = True).mean().plot(label = '0.5xCO$_2$', color = 'blue')
@@ -116,7 +111,6 @@ def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 	axes = fig.add_subplot(1,2,2)	
 	plt.plot(c6_CanESM5_1, label = 'CanESM5', color = 'pink')# label = 'CanESM5, r1i1p1f1'
 	plt.plot(c6_CanESM5_2, color = 'pink')#, label = 'CanESM5, r1i1p2f1')
-	#plt.plot(c6_E3SM_1_0, label = 'E3SM-1-0, r1i1p1f1', color = 'lightskyblue') # it shows zero but it appears to have some dimension issue (10^3 difference)
 	plt.plot(c6_EC_Earth3, label = 'EC\_Earth3', color = 'black')# label = 'EC_Earth3, r3i1p1f1'
 	plt.plot(c6_EC_Earth3_Veg, label = 'EC\_Earth3\_Veg', color = 'black', linestyle = '--')# label = 'EC_Earth3_Veg, r1i1p1f1'
 	plt.plot(c6_FGOALS_f3_L_1, color = 'gray', label = 'FGOALS-f3-L')# label = 'FGOALS-f3-L, r1i1p1f1'
@@ -130,12 +124,10 @@ def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 	plt.plot(c6_MRI_ESM2_0_3, color = 'yellow')#, label = 'MRI-ESM2-0, r7i1p1f1')
 	plt.plot(c6_MRI_ESM2_0_4, color = 'yellow')#, label = 'MRI-ESM2-0, r10i1p1f1')
 	plt.plot(c6_MRI_ESM2_0_5, color = 'yellow')#, label = 'MRI-ESM2-0, r13i1p1f1')
-	#plt.plot(c6_NorCPM1, label = 'NorCPM1, r1i1p1f1', color = 'lime', linestyle='--') it only runs for 80 years
 	plt.plot(c6_NorESM2_LM, label = 'NorESM2-LM', color = 'lime')# label = 'NorESM2-LM, r1i1p1f1'
 	plt.plot(c6_SAM0_UNICON, label = 'SAM0-UNICON, r1i1p1f1', color = 'chocolate')
 	plt.plot(c6_CESM2, label = 'CESM2', color = 'purple')# label = 'CESM2, r1i1p1f1'
 	plt.plot(c6_CESM2_WACCM, label = 'CESM2-WACCM', color = 'purple', linestyle='--')# label = 'CESM2-WACCM, r1i1p1f1'
-	#plt.plot(c6_GISS_E2_1_G_1, label = 'GISS-E2-1-G, r102i1p1f1', color = 'red', linestyle = '--')
 	plt.plot(c6_GISS_E2_1_G_2, label = 'GISS-E2-1-G', color = 'red', linewidth = 3)# label = 'GISS-E2-1-G, r1i1p3f1'
 	plt.title('B) Abrupt 4xCO$_2$ runs from CMIP6 models', fontsize = 17, usetex=True)
 	plt.xlabel('Years', fontsize = 15, usetex=True)
@@ -145,9 +137,7 @@ def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 	plt.ylim([0,3.7e10])
 	plt.ylabel('AMOC (Sv)', fontsize = 15, usetex=True)
 	plt.legend(loc=0, ncol = 2)#, fontsize = 4, ncol = 3)	
-	
-	
-	
+		
 	fig.tight_layout()
 	name_file = 'amoc_paper_figure_mov_avg_' + str(mov_avg) + '_years.pdf'
 	plt.savefig(name_file)

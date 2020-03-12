@@ -15,8 +15,9 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 from cartopy.mpl.geoaxes import GeoAxes
 import matplotlib.path as mpath
 
-os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/output")
+### load datasets ###
 
+os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/output")
 i_05 = xr.open_dataset('temp_0.5_surface.nc').ice
 i_1 = xr.open_dataset('temp_1_surface.nc').ice
 i_2 = xr.open_dataset('temp_2_surface.nc').ice
@@ -25,7 +26,6 @@ i_4 = xr.open_dataset('temp_4_surface.nc').ice
 i_5 = xr.open_dataset('temp_5_surface.nc').ice
 i_6 = xr.open_dataset('temp_6_surface.nc').ice
 i_8 = xr.open_dataset('temp_8_surface.nc').ice
-
 os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/plots_figures")
 
 def ice_nh_all_year_pd():
@@ -60,20 +60,17 @@ def ice_nh_all_year_pd():
 	di_6 = np.concatenate((di_6, di_6[:, 0:1]), axis=1)
 	di_8 = np.concatenate((di_8, di_8[:, 0:1]), axis=1)
 	
-	#fig = plt.figure(figsize=(20,30))
 	fig = plt.figure(figsize=(4, 4))
 	fig.set_figwidth(fig.get_figwidth() * 3)
 	fig.set_figheight(fig.get_figheight() * 2)
 
 	# Set projection
 	proj = ccrs.NorthPolarStereo(globe=None)
-	#proj = ccrs.NearsidePerspective(central_longitude=0.0,central_latitude = 90.0, satellite_height=35785831) 
 	
 	# create an axes class using cartopy.
 	axes_class = (GeoAxes, dict(map_projection=proj))
 	
 	# Make an Axes grid using matplotlib
-	# arguments should be self-explanatory
 	axgr = AxesGrid(fig, 111, axes_class=axes_class,
 	                nrows_ncols=(2, 3),
 	                axes_pad=0.4,
@@ -82,11 +79,6 @@ def ice_nh_all_year_pd():
 	                cbar_pad=0.4,
 	                cbar_size='4%',
 	                label_mode='')
-	
-	#img_extent = (-180, 181, -90, 90)
-	
-	# axgr is now a 2 by 1 array (in my case)
-	# coastlines
 	
 	axgr[0].set_title('A) 0.5xCO$_2$ - PI',fontsize=20, usetex=True)
 	axgr[1].set_title('B) 2xCO$_2$ - PI',fontsize=20, usetex=True)

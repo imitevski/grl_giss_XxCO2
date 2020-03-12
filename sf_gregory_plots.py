@@ -20,14 +20,15 @@ plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
 plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
 plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=8)    	   	# legend fontsize
+plt.rc('legend', fontsize=8)    	   	 # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
+def gregory_plot():	
+	"""
+	Plots Supplemental Figure 3 (Gregory Plots) 
+	"""
 
-
-def gregory_plot():
-
-	''' loading the data'''	
+	### loading the data ###	
 	
 	os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/output")
 
@@ -66,8 +67,9 @@ def gregory_plot():
 	area = xr.open_dataset('temp_1_surface.nc').axyp.mean(dim=['month','year'])
 	
 	os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/plots_figures")
-			
-	''' taking yearly and global weighted averages of temperature and net radiation of planet '''
+		
+		
+	### taking yearly and global weighted averages of temperature and net radiation of planet ###
 
 	temp_05 = (t_05.temp * t_05.axyp / t_05.axyp.mean()).mean('month').mean(dim=['lat','lon'])
 	temp_1 = (t_1.temp * t_1.axyp / t_1.axyp.mean()).mean('month').mean(dim=['lat','lon'])
@@ -100,8 +102,9 @@ def gregory_plot():
 	rad_h_2_qflux = rh_2_qflux.sel(hemis='global').groupby('time.year').mean('time')
 	rad_h_3_qflux = rh_3_qflux.sel(hemis='global').groupby('time.year').mean('time')
 	rad_h_4_qflux = rh_4_qflux.sel(hemis='global').groupby('time.year').mean('time')
-		
-	''' 149 years '''
+	
+	
+	### 149 years. One year is take out due to corrupted files ###
 
 	X = np.zeros((149, 9))
 	Y = np.zeros((149, 9))
@@ -141,9 +144,8 @@ def gregory_plot():
 	title_qflux = ['2xCO$_2$', '3xCO$_2$', '4xCO$_2$']
 	colors = ['blue','green','orange','lime','red','magenta','deepskyblue','brown','navy']	
 	
-	fig = plt.figure()#figsize=[6,6])
+	fig = plt.figure()
 	fig.set_figwidth(fig.get_figwidth()*1.8)
-	#fig.set_figheight(fig.get_figheight())
 
 	axes = fig.add_subplot(1,2,1)
 	plt.axvline(x=0, color = 'black', linestyle='-', label = None)		
@@ -154,7 +156,6 @@ def gregory_plot():
 		c = scipy.stats.linregress(x,y)
 		f = lambda x: c.intercept + c.slope * x
 		axes.scatter(x, y, color = colors[i-1], label = None, s = 40, alpha=0.3)
-		#label = title[i-1] + ', y = ' + str(np.around(c.intercept, 2)) + str(np.around(c.slope, 2)) + 'x, ' + 'x = ' + str(np.around(-c.intercept/c.slope,2))	
 		label = title[i-1]	
 		axes.plot([0, -c.intercept/c.slope], [c.intercept, 0], linewidth = 3, label = str(label), color = colors[i-1])
 		axes.scatter([0], [c.intercept], color = 'black', s=50)
@@ -175,13 +176,11 @@ def gregory_plot():
 		c = scipy.stats.linregress(x,y)
 		f = lambda x: c.intercept + c.slope * x
 		axes.scatter(x, y, color = colors[i-1+2], label = None, s = 40, alpha=0.3)
-		#label = title_qflux[i-1] + ', y = ' + str(np.around(c.intercept, 2)) + str(np.around(c.slope, 2)) + 'x, ' + 'x = ' + str(np.around(-c.intercept/c.slope,2))	
 		label = title_qflux[i-1]
 		axes.plot([0, -c.intercept/c.slope], [c.intercept, 0], linewidth = 3, label = str(label), color = colors[i-1+2])
 		axes.scatter([0], [c.intercept], color = 'black', s=50)
 		axes.scatter([-c.intercept/c.slope], [0], color = 'black', s=50) 
 	axes.set_title('B) Slab ocean', usetex=True)
-	#axes.set_ylabel('$\Delta R$ (W/m$^2$)')
 	axes.set_xlabel('$\Delta T$ (K)')
 	axes.legend(loc=0)
 	axes.set_xlim([-3,10])

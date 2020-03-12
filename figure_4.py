@@ -15,6 +15,9 @@ from matplotlib.ticker import StrMethodFormatter, NullFormatter
 import glob
 import os
 
+
+### load datasets ###
+
 os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/output")
 
 pe_05 = xr.open_dataset('u_pe_0.5_all.nc').pe
@@ -56,7 +59,11 @@ os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/pl
 
 
 def figure_4_pd3():
-	
+	"""
+	Plots figure 4 in paper
+	"""	
+
+
 	#### A) Precipitation ###
 	
 	def y_prec(l_s, l_e):
@@ -66,7 +73,6 @@ def figure_4_pd3():
 		:Input:		
 		 - *l_s* (int) - starting latitude 
 		 - *l_e* (int) - ending latitude
-		
 		:Output:
 		 - *y* (ndarray) - precipitation averaged over last 50 years for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
@@ -90,7 +96,6 @@ def figure_4_pd3():
 		:Input:		
 		 - *l_s* (int) - starting latitude 
 		 - *l_e* (int) - ending latitude
-		
 		:Output:
 		 - *e* (ndarray) - 1 \sigma of yearly variations of precipitation for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		'''
@@ -116,7 +121,6 @@ def figure_4_pd3():
 		
 		:Input:		
 		 - *h* (str) - hemisphere in either 'SH' or 'NH'
-		
 		:Output:
 		 - *y* (ndarray) - latitude of P-E = 0 for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
@@ -139,7 +143,6 @@ def figure_4_pd3():
 		
 		:Input:		
 		 - *h* (str) - hemisphere in either 'SH' or 'NH'
-		
 		:Output:
 		 - *e* (ndarray) - 1 \sigma of yearly variations of P-E=0 latitude at a hemisphere for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
@@ -165,7 +168,6 @@ def figure_4_pd3():
 		
 		:Inputs:		
 		 - *h* (str) - hemisphere in either 'SH' or 'NH'
-		
 		:Output:
 		 - *y* (ndarray) - HC Width 50 year average for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
@@ -188,8 +190,7 @@ def figure_4_pd3():
 		Calculates 1 \sigma of Hadley Cell width for 0.5,1,1.5,2,3,4,5,6,7,8xCO2 
 		
 		:Input:		
-		 - *hemisphere* (str) - hemisphere in either 'SH' or 'NH'
-		
+		 - *hemisphere* (str) - hemisphere in either 'SH' or 'NH'	
 		:Output:
 		 - *e* (ndarray) - 1 \sigma of yearly variations of HC width for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
@@ -215,7 +216,6 @@ def figure_4_pd3():
 		
 		:Input:
 		 - *ms* (list of strings) -  months specified (e.g. ['JAN','FEB','DEC'])
-		
 		:Output:
 		 - *y* (ndarray) - HC Strength as 50 year average for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
@@ -238,7 +238,6 @@ def figure_4_pd3():
 		
 		:Inputs:
 		 - *ms* (list of strings): months specified (e.g. ['JAN','FEB','DEC'])
-		
 		:Output:
 		 - *e* (ndarray) - 1 \sigma of yearly variations of HC Strength for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
@@ -311,7 +310,7 @@ def figure_4_pd3():
 	axes.legend(loc = 0, fontsize = 10)
 	
 	plt.tight_layout()
-	#plt.savefig('figure_4_pd3.pdf')
+	plt.savefig('figure_4_pd3.pdf')
 	plt.show()
 
 figure_4_pd3() 

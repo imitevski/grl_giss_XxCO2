@@ -14,8 +14,10 @@ import cartopy.crs as ccrs
 from mpl_toolkits.axes_grid1 import AxesGrid
 from cartopy.mpl.geoaxes import GeoAxes
 
-os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/output")
 
+### load datasets ###
+
+os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/output")
 t_05 = xr.open_dataset('temp_0.5_surface.nc').temp
 t_1 = xr.open_dataset('temp_1_surface.nc').temp
 t_15 = xr.open_dataset('temp_1.5_surface.nc').temp
@@ -25,12 +27,11 @@ t_4 = xr.open_dataset('temp_4_surface.nc').temp
 t_5 = xr.open_dataset('temp_5_surface.nc').temp
 t_6 = xr.open_dataset('temp_6_surface.nc').temp
 t_8 = xr.open_dataset('temp_8_surface.nc').temp
-
 os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/plots_figures")
 
 def t_surf_globe_pd2_r1():
 	'''	
-	Figure 1 in Paper
+	Plots figure 2 in Paper
 	'''
 
 	# defining cbar
