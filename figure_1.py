@@ -44,18 +44,18 @@ def t_surf_timeseries_pd():
 		:Output:
 		 - *y* (ndarray) - array with values for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
-		MEAN = ((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean()
+		MEAN = ((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean()
 		y = np.array([
-			((t_05.temp * t_05.axyp) / t_05.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,	
-			((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
-			((t_15.temp * t_15.axyp) / t_15.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
-			((t_2.temp * t_2.axyp) / t_2.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
-			((t_3.temp * t_3.axyp) / t_3.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
-			((t_4.temp * t_4.axyp) / t_4.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
-			((t_5.temp * t_5.axyp) / t_5.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
-			((t_6.temp * t_6.axyp) / t_6.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
-			((t_7.temp * t_7.axyp) / t_7.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN,
-			((t_8.temp * t_8.axyp) / t_8.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean('month').mean('year').mean() - MEAN ])
+			((t_05.temp * t_05.axyp) / t_05.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,	
+			((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_15.temp * t_15.axyp) / t_15.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_2.temp * t_2.axyp) / t_2.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_3.temp * t_3.axyp) / t_3.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_4.temp * t_4.axyp) / t_4.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_5.temp * t_5.axyp) / t_5.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_6.temp * t_6.axyp) / t_6.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_7.temp * t_7.axyp) / t_7.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_8.temp * t_8.axyp) / t_8.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN ])
 		return y
 			
 	def y_QFLUX(y_s, y_e, l_s, l_e):
@@ -70,38 +70,38 @@ def t_surf_timeseries_pd():
 		:Output:
 		 - *y* (ndarray) - array with values for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
-		MEAN = ((t_1_qf.temp * t_1_qf.axyp) / t_1_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean()
+		MEAN = ((t_1_qf.temp * t_1_qf.axyp) / t_1_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean()
 		y = np.array([
-			((t_1_qf.temp * t_1_qf.axyp) / t_1_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
-			((t_2_qf.temp * t_2_qf.axyp) / t_2_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
-			((t_3_qf.temp * t_3_qf.axyp) / t_3_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
-			((t_4_qf.temp * t_4_qf.axyp) / t_4_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN ])
+			((t_1_qf.temp * t_1_qf.axyp) / t_1_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_2_qf.temp * t_2_qf.axyp) / t_2_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_3_qf.temp * t_3_qf.axyp) / t_3_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_4_qf.temp * t_4_qf.axyp) / t_4_qf.axyp.mean()).sel(year = slice(y_s, y_e), lat = slice(l_s, l_e)).mean() - MEAN ])
 		return y
 	
 	### masking NAWH ###
 
-	td_150 = (t_15.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0
+	td_150 = (t_15.temp-t_1.temp).sel(year=slice(1950,2000)).mean(dim=['year','month']) > 0
 	td_150[:45,:] = True
 	
-	td_20 = (t_2.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0
+	td_20 = (t_2.temp-t_1.temp).sel(year=slice(1950,2000)).mean(dim=['year','month']) > 0
 	td_20[:45,:] = True
 		
-	td_30 = (t_3.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0
+	td_30 = (t_3.temp-t_1.temp).sel(year=slice(1950,2000)).mean(dim=['year','month']) > 0
 	td_30[:45,:] = True
 	
-	td_40 = (t_4.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0
+	td_40 = (t_4.temp-t_1.temp).sel(year=slice(1950,2000)).mean(dim=['year','month']) > 0
 	td_40[:45,:] = True
 	
-	td_50 = (t_5.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0
+	td_50 = (t_5.temp-t_1.temp).sel(year=slice(1950,2000)).mean(dim=['year','month']) > 0
 	td_50[:45,:] = True
 	
-	td_60 = (t_6.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0 
+	td_60 = (t_6.temp-t_1.temp).sel(year=slice(1950,2000)).mean(dim=['year','month']) > 0 
 	td_60[:45,:] = True
 	
-	td_70 = (t_7.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0 
+	td_70 = (t_7.temp-t_1.temp).sel(year=slice(1950,2000)).mean(dim=['year','month']) > 0 
 	td_70[:45,:] = True
 	
-	td_80 = (t_8.temp-t_1.temp).sel(year=slice(1950,2000)).mean('year').mean('month') > 0 
+	td_80 = (t_8.temp-t_1.temp).sel(year=slice(1950,2000)).mean(dim=['year','month']) > 0 
 	td_80[:45,:] = True
 	
 	def y_mask(l_s, l_e):
@@ -114,10 +114,10 @@ def t_surf_timeseries_pd():
 		:Output:
 		 - *y* (ndarray) - array with values for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""	
-		MEAN = ((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean()
+		MEAN = ((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean()
 		y = np.array([	
-			((t_05.temp * t_05.axyp) / t_05.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
-			((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).mean() - MEAN,
+			((t_05.temp * t_05.axyp) / t_05.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
+			((t_1.temp * t_1.axyp) / t_1.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean() - MEAN,
 			((t_15.temp * t_15.axyp) / t_15.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_150 == True).mean() - MEAN,
 			((t_2.temp * t_2.axyp) / t_2.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_20 == True).mean() - MEAN,
 			((t_3.temp * t_3.axyp) / t_3.axyp.mean()).sel(year = slice(1950, 2000), lat = slice(l_s, l_e)).mean(dim=['month','year']).where(td_30 == True).mean() - MEAN,

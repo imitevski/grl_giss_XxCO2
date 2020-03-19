@@ -58,16 +58,16 @@ def supplemental_fig_ice_extent():
 		 - *y_sie* (ndarray) - sea-ice extent at 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
 		y_sie = np.array([	
-			(sie_05 * t_05.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ,
-			(sie_1 * t_1.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ,
-			(sie_15 * t_15.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ,
-			(sie_2 * t_2.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ,
-			(sie_3 * t_3.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ,
-			(sie_4 * t_4.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ,
-			(sie_5 * t_5.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ,
-			(sie_6 * t_6.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ,
-			(sie_7 * t_7.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ,
-			(sie_8 * t_8.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean('month').mean('year') / 1e12 ])
+			(sie_05 * t_05.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ,
+			(sie_1 * t_1.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ,
+			(sie_15 * t_15.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ,
+			(sie_2 * t_2.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ,
+			(sie_3 * t_3.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ,
+			(sie_4 * t_4.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ,
+			(sie_5 * t_5.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ,
+			(sie_6 * t_6.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ,
+			(sie_7 * t_7.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ,
+			(sie_8 * t_8.axyp).sel(year=slice(1950,2000), lat=slice(l_s,l_e)).sum(dim=['lat','lon']).mean() / 1e12 ])
 		return y_sie
 	
 	def y_sie_error(l_s, l_e):

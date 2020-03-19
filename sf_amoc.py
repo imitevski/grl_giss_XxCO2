@@ -36,6 +36,7 @@ def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 	psi_4 = xr.open_dataset('psi_sf_Atl_4.nc').sf_Atl
 	psi_5 = xr.open_dataset('psi_sf_Atl_5.nc').sf_Atl
 	psi_6 = xr.open_dataset('psi_sf_Atl_6.nc').sf_Atl
+	psi_7 = xr.open_dataset('psi_sf_Atl_7.nc').sf_Atl
 	psi_8 = xr.open_dataset('psi_sf_Atl_8.nc').sf_Atl
 	os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/plots_figures")
 
@@ -96,6 +97,7 @@ def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 	psi_3.sel(lato2=slice(l_s,l_e), zoce=slice(d_s,d_e)).max(dim=['zoce','lato2']).groupby('time.year').mean('time').rolling(year = mov_avg, center = True).mean().plot(label = '3xCO$_2$', color = 'lime')	
 	psi_5.sel(lato2=slice(l_s,l_e), zoce=slice(d_s,d_e)).max(dim=['zoce','lato2']).groupby('time.year').mean('time').rolling(year = mov_avg, center = True).mean().plot(label = '5xCO$_2$', color = 'magenta')
 	psi_6.sel(lato2=slice(l_s,l_e), zoce=slice(d_s,d_e)).max(dim=['zoce','lato2']).groupby('time.year').mean('time').rolling(year = mov_avg, center = True).mean().plot(label = '6xCO$_2$', color = 'deepskyblue')
+	psi_7.sel(lato2=slice(l_s,l_e), zoce=slice(d_s,d_e)).max(dim=['zoce','lato2']).groupby('time.year').mean('time').rolling(year = mov_avg, center = True).mean().plot(label = '7xCO$_2$', color = 'purple')
 	psi_8.sel(lato2=slice(l_s,l_e), zoce=slice(d_s,d_e)).max(dim=['zoce','lato2']).groupby('time.year').mean('time').rolling(year = mov_avg, center = True).mean().plot(label = '8xCO$_2$', color = 'brown')	
 	psi_4.sel(lato2=slice(l_s,l_e), zoce=slice(d_s,d_e)).max(dim=['zoce','lato2']).groupby('time.year').mean('time').rolling(year = mov_avg, center = True).mean().plot(label = '4xCO$_2$', color = 'red', linewidth = 3)
 	plt.title('A) Abrupt XxCO$_2$ from GISS Model E2.1', fontsize = 17, usetex=True)
