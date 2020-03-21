@@ -105,7 +105,7 @@ def amoc_paper_figure(l_s, l_e, d_s, d_e, mov_avg):
 	plt.xlim([1850,2000])
 	plt.ylim([0,37])
 	plt.xticks(np.arange(1850,2025,25), np.arange(0,175,25), fontsize = 15, usetex=True)
-	plt.yticks([0, 5, 10, 15, 20, 25, 35], fontsize = 15, usetex=True)
+	plt.yticks([0, 5, 10, 15, 20, 25, 30, 35], fontsize = 15, usetex=True)
 	plt.ylabel('AMOC (Sv)', fontsize = 15, usetex=True)
 	plt.rc('text', usetex=True)
 	plt.legend(loc=0, ncol = 2)
