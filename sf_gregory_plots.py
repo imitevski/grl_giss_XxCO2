@@ -143,7 +143,10 @@ def gregory_plot():
 	title = ['0.5xCO$_2$', '1.5xCO$_2$', '2xCO$_2$', '3xCO$_2$', '4xCO$_2$', '5xCO$_2$', '6xCO$_2$', '7xCO$_2$', '8xCO$_2$']
 	title_qflux = ['2xCO$_2$', '3xCO$_2$', '4xCO$_2$']
 	colors = ['blue','green','orange','lime','red','magenta','deepskyblue','brown','navy']	
+	rf_y_int = np.zeros(9)
 	
+	
+	### Gregory Plot Figure ###
 	fig = plt.figure()
 	fig.set_figwidth(fig.get_figwidth()*1.8)
 
@@ -159,7 +162,8 @@ def gregory_plot():
 		label = title[i-1]	
 		axes.plot([0, -c.intercept/c.slope], [c.intercept, 0], linewidth = 3, label = str(label), color = colors[i-1])
 		axes.scatter([0], [c.intercept], color = 'black', s=50)
-		axes.scatter([-c.intercept/c.slope], [0], color = 'black', s=50) 
+		axes.scatter([-c.intercept/c.slope], [0], color = 'black', s=50)
+		rf_y_int[i-1] =  c.intercept
 	axes.set_title('A) Fully coupled')
 	axes.set_ylabel('$\Delta R$ (W/m$^2$)')
 	axes.set_xlabel('$\Delta T$ (K)')
@@ -189,6 +193,23 @@ def gregory_plot():
 	fig.tight_layout()
 	plt.savefig('gregory_plot_supplemental_figure.pdf')
 	plt.show()
+
+	#### RF Comparsion Figure ###
+	x = np.array([0.5,1.5,2,3,4,5,6,7,8])
+	fig = plt.figure()
+	axes = fig.add_subplot(1,1,1)
+	axes.errorbar(x, rf_y_int, marker='o', markersize = 8, linewidth=3, color = 'black', label='Gregory Regression')
+	axes.errorbar(x, 5.35*np.log(x), marker='o', markersize = 8, linewidth=3, color = 'green', label='5.35$\ln$(XxCO$_2$/1xCO$_2$)')
+	plt.xlabel('XxCO$_2$')	
+	plt.ylabel('Radiative Forcing (W/m$^2$)')
+	plt.legend(loc=0, fontsize = 12)
+	#plt.yticks([0,4,8])
+	plt.xticks(np.arange(1,9))
+	#plt.ylim([-3.1,8.1])
+	#plt.xlim([-4.2,12])
+	fig.tight_layout()
+	plt.savefig('sf_radiative_forcing_comparison.pdf')
+	plt.show()	
 
 gregory_plot()
 

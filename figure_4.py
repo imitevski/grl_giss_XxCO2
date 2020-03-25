@@ -58,9 +58,16 @@ psi_max = xr.open_dataset('psi_max_abs_500_mbar_all_xCO2_rev2.nc').psi_max
 os.chdir("/nfs3m/archive/sfa_cache09/users/g00/imitevsk/E2.1_CO2_runs/pytropd/plots_figures")
 
 
-def figure_4_pd3():
+def figure_4_pd3(t_s, t_e):
 	"""
 	Plots figure 4 in paper
+	
+	:Input:
+	 - *t_s* (int) - start equilibrium year (range 1850-1999)
+	 - *t_e* (int) - end equilibrium year (range 1851-2000)
+	:Output:
+	 - *figure* (.pdf) - figure with 4 panels showing A) Precipitation, B) P-E=0, C) HC width, D) HC strength
+
 	"""	
 
 
@@ -77,16 +84,16 @@ def figure_4_pd3():
 		 - *y* (ndarray) - precipitation averaged over last 50 years for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
 		y = np.array([
-			(t_05.prec * t_05.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_05.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(),
-			(t_1.prec * t_1.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_1.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(),
-			(t_15.prec * t_15.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_15.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(),
-			(t_2.prec * t_2.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_2.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(),
-			(t_3.prec * t_3.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_3.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(),
-			(t_4.prec * t_4.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_4.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(),
-			(t_5.prec * t_5.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_5.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(),
-			(t_6.prec * t_6.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_6.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(),
-			(t_7.prec * t_7.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_7.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(),
-			(t_8.prec * t_8.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() / t_8.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean() ])
+			(t_05.prec * t_05.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_05.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(),
+			(t_1.prec * t_1.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_1.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(),
+			(t_15.prec * t_15.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_15.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(),
+			(t_2.prec * t_2.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_2.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(),
+			(t_3.prec * t_3.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_3.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(),
+			(t_4.prec * t_4.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_4.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(),
+			(t_5.prec * t_5.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_5.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(),
+			(t_6.prec * t_6.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_6.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(),
+			(t_7.prec * t_7.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_7.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(),
+			(t_8.prec * t_8.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() / t_8.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean() ])
 		return y
 			
 	def e_prec(l_s, l_e):
@@ -100,16 +107,16 @@ def figure_4_pd3():
 		 - *e* (ndarray) - 1 \sigma of yearly variations of precipitation for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		'''
 		e = np.array([
-			((t_05.prec * t_05.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_05.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
-			((t_1.prec * t_1.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_1.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
-			((t_15.prec * t_15.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_15.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
-			((t_2.prec * t_2.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_2.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
-			((t_3.prec * t_3.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_3.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
-			((t_4.prec * t_4.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_4.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
-			((t_5.prec * t_5.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_5.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
-			((t_6.prec * t_6.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_6.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
-			((t_7.prec * t_7.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_7.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
-			((t_8.prec * t_8.axyp).sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_8.axyp.sel(year = slice(1950,2000), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std() ])
+			((t_05.prec * t_05.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_05.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
+			((t_1.prec * t_1.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_1.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
+			((t_15.prec * t_15.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_15.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
+			((t_2.prec * t_2.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_2.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
+			((t_3.prec * t_3.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_3.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
+			((t_4.prec * t_4.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_4.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
+			((t_5.prec * t_5.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_5.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
+			((t_6.prec * t_6.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_6.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
+			((t_7.prec * t_7.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_7.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std(),
+			((t_8.prec * t_8.axyp).sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month']) / t_8.axyp.sel(year = slice(t_s, t_e), lat=slice(l_s, l_e)).mean(dim=['lat','lon','month'])).std() ])
 		return e	
 
 		
@@ -125,16 +132,16 @@ def figure_4_pd3():
 		 - *y* (ndarray) - latitude of P-E = 0 for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
 		y = np.array([	
-			(pe_05-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean(),
-			(pe_1-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean(),
-			(pe_15-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean(),
-			(pe_2-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean(),
-			(pe_3-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean(),
-			(pe_4-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean(),
-			(pe_5-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean(),
-			(pe_6-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean(),
-			(pe_7-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean(),
-			(pe_8-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).mean()  ])
+			(pe_05-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean(),
+			(pe_1-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean(),
+			(pe_15-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean(),
+			(pe_2-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean(),
+			(pe_3-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean(),
+			(pe_4-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean(),
+			(pe_5-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean(),
+			(pe_6-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean(),
+			(pe_7-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean(),
+			(pe_8-pe_1).sel(year = slice(t_s, t_e), season='all_year', pe_location = h).mean()  ])
 		return y
 
 	def e_pe(h):
@@ -147,16 +154,16 @@ def figure_4_pd3():
 		 - *e* (ndarray) - 1 \sigma of yearly variations of P-E=0 latitude at a hemisphere for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
 		e = np.array([	
-			(pe_05-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std(),
-			(pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std(),
-			(pe_15-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std(),
-			(pe_2-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std(),
-			(pe_3-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std(),
-			(pe_4-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std(),
-			(pe_5-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std(),
-			(pe_6-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std(),
-			(pe_7-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std(),
-			(pe_8-pe_1).sel(year = slice(1950,2000), season='all_year', pe_location = h).std()  ])
+			pe_05.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std(),
+			pe_1.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std(),
+			pe_15.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std(),
+			pe_2.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std(),
+			pe_3.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std(),
+			pe_4.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std(),
+			pe_5.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std(),
+			pe_6.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std(),
+			pe_7.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std(),
+			pe_8.sel(year = slice(t_s, t_e), season='all_year', pe_location = h).std()  ])
 		return e
 	
 
@@ -171,18 +178,17 @@ def figure_4_pd3():
 		:Output:
 		 - *y* (ndarray) - HC Width 50 year average for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
-		Mean = u_1.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean(dim='year')
 		y = np.array([
-			u_05.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean,
-			u_1.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean,
-			u_15.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean,
-			u_2.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean,
-			u_3.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean,
-			u_4.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean,
-			u_5.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean,
-			u_6.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean,
-			u_7.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean,
-			u_8.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).mean() - Mean ])
+			(u_05 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean(),
+			(u_1 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean(),
+			(u_15 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean(),
+			(u_2 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean(),
+			(u_3 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean(),
+			(u_4 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean(),
+			(u_5 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean(),
+			(u_6 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean(),
+			(u_7 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean(),
+			(u_8 - u_1).sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).mean() ])
 		return y
 
 	def e_psi(h):
@@ -195,16 +201,16 @@ def figure_4_pd3():
 		 - *e* (ndarray) - 1 \sigma of yearly variations of HC width for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
 		e = np.array([
-			u_05.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std(),
-			u_1.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std(),
-			u_15.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std(),
-			u_2.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std(),
-			u_3.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std(),
-			u_4.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std(),
-			u_5.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std(),
-			u_6.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std(),
-			u_7.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std(),
-			u_8.sel(year = slice(1950,2000), season = 'all_year', psi_location = h).std() ])
+			u_05.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std(),
+			u_1.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std(),
+			u_15.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std(),
+			u_2.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std(),
+			u_3.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std(),
+			u_4.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std(),
+			u_5.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std(),
+			u_6.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std(),
+			u_7.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std(),
+			u_8.sel(year = slice(t_s, t_e), season = 'all_year', psi_location = h).std() ])
 		return e
 	
 		
@@ -220,16 +226,16 @@ def figure_4_pd3():
 		 - *y* (ndarray) - HC Strength as 50 year average for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
 		y = np.array([
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 0.5).mean(dim=['month'])).max('lat').mean('year'),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 1).mean(dim=['month'])).max('lat').mean('year'),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 1.5).mean(dim=['month'])).max('lat').mean('year'),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 2).mean(dim=['month'])).max('lat').mean('year'),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 3).mean(dim=['month'])).max('lat').mean('year'),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 4).mean(dim=['month'])).max('lat').mean('year'),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 5).mean(dim=['month'])).max('lat').mean('year'),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 6).mean(dim=['month'])).max('lat').mean('year'),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 7).mean(dim=['month'])).max('lat').mean('year'),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 8).mean(dim=['month'])).max('lat').mean('year') ]) 
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 0.5).mean(dim=['month'])).max('lat').mean('year'),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 1).mean(dim=['month'])).max('lat').mean('year'),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 1.5).mean(dim=['month'])).max('lat').mean('year'),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 2).mean(dim=['month'])).max('lat').mean('year'),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 3).mean(dim=['month'])).max('lat').mean('year'),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 4).mean(dim=['month'])).max('lat').mean('year'),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 5).mean(dim=['month'])).max('lat').mean('year'),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 6).mean(dim=['month'])).max('lat').mean('year'),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 7).mean(dim=['month'])).max('lat').mean('year'),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 8).mean(dim=['month'])).max('lat').mean('year') ]) 
 		return y
 
 	def e_max_psi(ms):
@@ -242,16 +248,16 @@ def figure_4_pd3():
 		 - *e* (ndarray) - 1 \sigma of yearly variations of HC Strength for 0.5,1,1.5,2,3,4,5,6,7,8xCO2
 		"""
 		e = np.array([
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 0.5).mean(dim=['month'])).max('lat').std(),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 1).mean(dim=['month'])).max('lat').std(),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 1.5).mean(dim=['month'])).max('lat').std(),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 2).mean(dim=['month'])).max('lat').std(),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 3).mean(dim=['month'])).max('lat').std(),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 4).mean(dim=['month'])).max('lat').std(),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 5).mean(dim=['month'])).max('lat').std(),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 6).mean(dim=['month'])).max('lat').std(),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 7).mean(dim=['month'])).max('lat').std(),
-			abs(psi_max.sel(year = slice(1950,2000), month = ms, CO2 = 8).mean(dim=['month'])).max('lat').std() ]) 
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 0.5).mean(dim=['month'])).max('lat').std(),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 1).mean(dim=['month'])).max('lat').std(),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 1.5).mean(dim=['month'])).max('lat').std(),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 2).mean(dim=['month'])).max('lat').std(),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 3).mean(dim=['month'])).max('lat').std(),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 4).mean(dim=['month'])).max('lat').std(),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 5).mean(dim=['month'])).max('lat').std(),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 6).mean(dim=['month'])).max('lat').std(),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 7).mean(dim=['month'])).max('lat').std(),
+			abs(psi_max.sel(year = slice(t_s, t_e), month = ms, CO2 = 8).mean(dim=['month'])).max('lat').std() ]) 
 		return e
 
 
@@ -313,4 +319,4 @@ def figure_4_pd3():
 	plt.savefig('figure_4_pd3.pdf')
 	plt.show()
 
-figure_4_pd3() 
+figure_4_pd3(t_s = 1950, t_e = 2000) 
