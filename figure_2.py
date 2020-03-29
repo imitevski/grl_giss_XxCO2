@@ -62,7 +62,7 @@ def t_surf_globe_pd2_r1():
 	# Make an Axes grid using matplotlib
 	axgr = AxesGrid(fig, 111, axes_class=axes_class,
 	                nrows_ncols=(2, 3),
-	                axes_pad=0.4,
+	                axes_pad=0.5,#0.4
 	                cbar_location='right',
 	                cbar_mode='single',
 	                cbar_pad=0.4,

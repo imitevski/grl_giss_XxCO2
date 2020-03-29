@@ -184,7 +184,7 @@ def gregory_plot():
 		axes.plot([0, -c.intercept/c.slope], [c.intercept, 0], linewidth = 3, label = str(label), color = colors[i-1+2])
 		axes.scatter([0], [c.intercept], color = 'black', s=50)
 		axes.scatter([-c.intercept/c.slope], [0], color = 'black', s=50) 
-	axes.set_title('B) Slab ocean', usetex=True)
+	axes.set_title('B) Q-flux', usetex=True)
 	axes.set_xlabel('$\Delta T$ (K)')
 	axes.legend(loc=0)
 	axes.set_xlim([-3,10])
