@@ -130,9 +130,9 @@ def t_surf_timeseries_pd():
 	
 	
 	x = np.array([0.5,1,1.5,2,3,4,5,6,7,8])	
-	x = 5.5*np.log(x)	
+	x = 5.35*np.log(x)	
 	x_QFLUX = np.array([1,2,3,4])	
-	x_QFLUX = 5.5*np.log(x_QFLUX)	
+	x_QFLUX = 5.35*np.log(x_QFLUX)	
 			
 	fig = plt.figure()
 	fig.set_figwidth(fig.get_figwidth() * 1.8)		

@@ -33,7 +33,7 @@ def supplemental_fig_ice_extent():
 	"""
 	
 	x = np.array([0.5, 1, 1.5, 2, 3, 4, 5, 6, 7, 8])
-	x = np.log(x) * 5.5
+	x = np.log(x) * 5.35
 
 	### sea-ice area where ice content is greater than 15% 	
 	sie_05 = t_05.ice.where(t_05.ice > 15) / 100

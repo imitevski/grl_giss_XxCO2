@@ -33,7 +33,7 @@ def ice_nh_all_year_pd():
 	Plots Figure 3 in the paper
 	'''	
 	# cbar variables
-	cmap_var = 'seismic'
+	cmap_var = 'seismic_r'
 	cbar_start = -100
 	cbar_end = 105
 	cbar_step = 5
